@@ -7,8 +7,6 @@ import glob
 import PIL
 from PIL import Image
 
-from scipy.spatial.transform import Rotation as R
-
 from plyfile import PlyData, PlyElement
 
 import cv2 as cv

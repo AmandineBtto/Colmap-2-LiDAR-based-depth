@@ -33,6 +33,10 @@ Warning:
 
 ## Run 
 
+This code has been developped and tested on Ubuntu VERSION="20.04.5 LTS". 
+The .YAML file can be used to duplicate the conda environement. 
+The main packages necessary are pandas, numpy, matplotlib, plyfile and opencv-python.
+
 ### To get parameters description:
 ```
 python main.py -h

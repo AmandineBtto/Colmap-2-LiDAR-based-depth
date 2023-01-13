@@ -72,7 +72,7 @@ python main.py \
 --transformation_mat LINE 1  \
 --transformation_mat LINE 2  \
 --transformation_mat LINE 3  \
---transformation_mat 0 0 0 1  \
+--transformation_mat 0.0 0.0 0.0 1.0  \
 --save True \
 --visualization True \
 --orig_image_id 10 \
@@ -95,14 +95,14 @@ Path to the LiDAR point cloud in .ply.
 
 - ```--transformation_mat```
 4x4 Transformation matrix between Colmap space and LiDAR space. 
-Each line must be given as float, with space between numbers.
+Each line must be given as float, with space between numbers, the decimal separator is a point. 
 
 - ```--save```
-Can be True or False.
+Boolean.
 If True will save in the saving_dir, two .pkl files containing extrinsics and poses in Colmap and LiDAR space. 
 
 - ```--visualization```
-Can be True or False.
+Boolean.
 If True will save two .ply files containing the cameras centers in Colmap and LiDAR space. It can be use to check the tran sformation matrix.
 
 - ```--orig_image_id```
@@ -110,7 +110,7 @@ Can be an int or None.
 If None, will run on all images. If an int in specified, will compute the depth for the corresponding image.
 
 - ```--data_augment ```
-Can be True or False. 
+Boolean.
 If True, will do a naive data augmentation on the depth. It means it will duplicate the distance to the directly adjacent pixels. Can be used in the case of very sparce LiDAR point clouds.
 
 - ```--size ```

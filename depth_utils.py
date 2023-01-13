@@ -93,7 +93,7 @@ def convert_to_rgb(minval, maxval, val, colors):
         (r1, g1, b1), (r2, g2, b2) = colors[i], colors[i+1]
         return int(r1 + f*(r2-r1)), int(g1 + f*(g2-g1)), int(b1 + f*(b2-b1))
 
-def depth_rgb_mapping(depth_dist_name, overall_min_dist, overall_max_dist, saving_dir, data_augm = False):
+def depth_rgb_mapping(depth_dist_name, overall_min_dist, overall_max_dist, saving_dir, data_augm = False, save = False):
     # min and max should be global and not relative to one camera or one room configuration (consistency)
     depth_dist = np.load(os.path.join(saving_dir, 'depth', depth_dist_name))
     
@@ -115,16 +115,20 @@ def depth_rgb_mapping(depth_dist_name, overall_min_dist, overall_max_dist, savin
     for x in range(0, x_max):
         for y in range(0, y_max):
             d = depth_dist[x, y]
-            r,g,b = convert_to_rgb(overall_min_dist, overall_max_dist, d, colors)
-            if data_augm == True:
-                set_pix(rgb_depth,x,y,r,g,b)
-            else:
-                rgb_depth[x,y,0] = r
-                rgb_depth[x,y,1] = g
-                rgb_depth[x,y,2] = b
-        
-    # save 
-    rgb_depth_name = 'rgb_depth_image_' + depth_dist_name.split('_')[-1].split('.')[-2] + '.npy'
-    np.save(os.path.join(saved_depth_rgb_path, rgb_depth_name), rgb_depth)  
+            if d!=0:
+                r,g,b = convert_to_rgb(overall_min_dist, overall_max_dist, d, colors)
+                if data_augm == True:
+                    set_pix(rgb_depth,x,y,r,g,b)
+                else:
+                    rgb_depth[x,y,0] = r
+                    rgb_depth[x,y,1] = g
+                    rgb_depth[x,y,2] = b
+                    
+    if save == True:    
+        # save 
+        rgb_depth_name = 'rgb_depth_image_' + depth_dist_name.split('_')[-1].split('.')[-2] + '.npy'
+        np.save(os.path.join(saved_depth_rgb_path, rgb_depth_name), rgb_depth)  
+    else:
+        return rgb_depth
 
 
